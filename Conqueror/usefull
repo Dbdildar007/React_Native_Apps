@@ -1,0 +1,813 @@
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            new Date().toLocaleTimeString()
+             
+            console.log(new Date().toISOString());
+
+
+
+
+
+
+
+
+            <View style={{flexDirection:'row',marginEnd:7}}>
+            <Image style={{height:height*0.020,width:width*0.050}} source={require('../assets/bell.png')}/>
+               <Text style={{paddingStart:7,fontWeight:'bold',color:'green'}}>Linup</Text>
+           </View> 
+
+
+
+
+
+
+           let changingDate = new Date(inputDate);
+           let sst = changingDate.toLocaleTimeString();
+           am_pm = sst.slice(8, 12);
+           str = sst.slice(0, -6);
+       
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<View>
+{(days >1)?<Text>{days} days</Text>
+:(days == 1)?<Text>Tomorrow</Text>
+
+:(hours>0)?<View style={{ flexDirection: 'row',}}>
+<View style={{ backgroundColor: '#FF0000', borderRadius: 5, marginEnd: 3 }}>
+  <Text style={{ fontWeight: 'bold', fontSize: 17, paddingStart: 2, paddingEnd: 2 }}>{hours}</Text>
+</View>
+<View style={{ backgroundColor: '#FF0000', borderRadius: 5, marginEnd: 3 }}>
+  <Text style={{ fontWeight: 'bold', fontSize: 17, paddingStart: 2, paddingEnd: 2 }}>{minutes}</Text>
+</View>
+</View>
+:(minutes>0)?<View style={{ flexDirection: 'row',}}>
+<View style={{ backgroundColor: '#FF0000', borderRadius: 5, marginEnd: 3 }}>
+    <Text style={{ fontWeight: 'bold', fontSize: 17, paddingStart: 2, paddingEnd: 2 }}>{minutes}</Text>
+  </View>
+  <View style={{ backgroundColor: '#FF0000', borderRadius: 5, marginEnd: 3 }}>
+    <Text style={{ fontWeight: 'bold', fontSize: 17, paddingStart: 2, paddingEnd: 2 }}>{seconds}</Text>
+  </View>
+  </View>
+  :(seconds>0)?<View style={{ flexDirection: 'row',}}>
+  <View style={{ backgroundColor: '#FF0000', borderRadius: 5, marginEnd: 3 }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 17, paddingStart: 2, paddingEnd: 2 }}>{seconds}</Text>
+    </View>
+    </View>:null}
+<Text>{str+' '+am_pm}</Text>
+</View>  
+
+
+
+
+
+
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, Dimensions, Image, FlatList } from 'react-native'
+
+const height = Dimensions.get('screen').height
+const width = Dimensions.get('screen').height;
+
+
+const Testing = () => {
+    const [days, setDays] = useState(0);
+    const [hours, setHours] = useState(0);
+    const [minutes, setMinutes] = useState(0);
+    const [seconds, setSeconds] = useState(0);
+    const [inputDate, setInputDate] = useState('Mon Aug 28 2023 14:39:34 GMT+0530');
+    let interval = useRef();
+console.log('new date '+new Date());
+console.log('old' +new Date(inputDate))
+    /*2023-08-27T17:06:39.680Z */
+
+   /* LOG  new date Mon Aug 28 2023 14:39:33 GMT+0530 */
+   
+
+
+export default Testing
+
+
+
+
+//calling chind class function in parent class code
+
+//parent class
+
+import { StyleSheet, Text, View, Button } from 'react-native';
+import Validate from './Validate';
+import { useRef } from 'react';
+
+export default function Demo() {
+
+  let childRef = useRef(null);
+
+
+  return (
+    <View style={styles.container}>
+     
+      <Validate childRef={childRef}  />
+      <Button onPress={() => childRef.current.validate()} title="Validate" />
+      <Text>Hi </Text>
+     
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+
+//child class function 
+
+import { useState } from 'react';
+import { TextInput, StyleSheet,Text } from 'react-native';
+
+
+export default function Validate(props) {
+   
+
+    let validate = () => {
+       console.log('validate finc')
+    };
+
+    props.childRef.current = {
+        validate: validate,
+    };
+
+    return (
+        <Text>validate</Text>
+    );
+}
+
+const styles = StyleSheet.create({
+    input: {
+        alignSelf: "stretch",
+        padding: 4,
+        margin: 8
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+* Sample React Native App
+* https://github.com/facebook/react-native
+* @flow
+*/
+
+import React, { Component } from 'react';
+import {
+
+  StyleSheet,
+  Text,
+  View,
+  TouchableHighlight,
+
+} from 'react-native';
+
+import RazorpayCheckout from 'react-native-razorpay';
+
+class Demo extends Component {
+
+  render() {
+    return (
+      <View style={styles.container}>
+      <TouchableHighlight   onPress={() => {
+        var options = {
+          description: 'Credits towards consultation',
+          image: 'https://i.imgur.com/3g7nmJC.png',
+          currency: 'INR',
+          key: 'rzp_test_1DP5mmOlF5G5ag',
+          amount: '50000',
+          external: {
+            wallets: ['paytm']
+          },
+          name: 'Add Amount',
+          prefill: {
+            email: 'akshay@razorpay.com',
+            contact: '8271169056',
+            name: 'Akshay Bhalotia'
+          },
+          theme: {color: 'green'}
+        }
+        RazorpayCheckout.open(options).then((data) => {
+          // handle success
+          alert(`Success: ${data.razorpay_payment_id}`);
+        }).catch((error) => {
+          // handle failure
+          alert(`cancelled`);
+        });
+        RazorpayCheckout.onExternalWalletSelection(data => {
+          alert(`External Wallet Selected: ${data.external_wallet} `);
+        });
+      }}>
+      <Text style = {styles.text}>ADD</Text>
+      </TouchableHighlight>
+      </View>
+    );
+  }
+
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color:'green'
+  }
+});
+
+export default Demo;
+
+
+
+
+
+
+
+
+//image picker code is here
+
+
+
+// Example of Image Picker in React Native
+// https://aboutreact.com/example-of-image-picker-in-react-native/
+
+// Import React
+import React, {useState} from 'react';
+// Import required components
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Platform,
+ 
+} from 'react-native';
+
+// Import Image Picker
+// import ImagePicker from 'react-native-image-picker';
+
+const Demo = () => {
+
+ 
+  return (
+    <SafeAreaView style={{flex: 1}}>
+      
+      <View style={styles.container}>
+        {/* <Image
+          source={{
+            uri: 'data:image/jpeg;base64,' + filePath.data,
+          }}
+          style={styles.imageStyle}
+        /> */}
+        <Image
+          source={{uri: filePath.uri}}
+          style={styles.imageStyle}
+        />
+        <Text style={styles.textStyle}>{filePath.uri}</Text>
+       
+       
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.buttonStyle}
+          onPress={() => chooseFile('photo')}>
+          <Text style={styles.textStyle}>Choose Image</Text>
+        </TouchableOpacity>
+       
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default Demo;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+  titleText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingVertical: 20,
+  },
+  textStyle: {
+    padding: 10,
+    color: 'black',
+    textAlign: 'center',
+  },
+  buttonStyle: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 5,
+    marginVertical: 10,
+    width: 250,
+  },
+  imageStyle: {
+    width: 200,
+    height: 200,
+    margin: 5,
+  },
+});
+
+
+
+
+
+
+
+// Example of Image Picker in React Native
+// https://aboutreact.com/example-of-image-picker-in-react-native/
+
+// Import React
+import React, {useState} from 'react';
+// Import required components
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+
+// Import Image Picker
+import ImagePicker from 'react-native-image-picker';
+
+const App = () => {
+  const [filePath, setFilePath] = useState({});
+
+  const chooseFile = () => {
+    let options = {
+      title: 'Select Image',
+      customButtons: [
+        {
+          name: 'customOptionKey',
+          title: 'Choose Photo from Custom Option'
+        },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log(
+          'User tapped custom button: ',
+          response.customButton
+        );
+        alert(response.customButton);
+      } else {
+        let source = response;
+        // You can also display the image using data:
+        // let source = {
+        //   uri: 'data:image/jpeg;base64,' + response.data
+        // };
+        setFilePath(source);
+      }
+    });
+  };
+
+  return (
+    <SafeAreaView style={{flex: 1}}>
+      <Text style={styles.titleText}>
+        Example of Image Picker in React Native
+      </Text>
+      <View style={styles.container}>
+        {/*<Image 
+          source={{ uri: filePath.path}} 
+          style={{width: 100, height: 100}} />*/}
+        <Image
+          source={{
+            uri: 'data:image/jpeg;base64,' + filePath.data,
+          }}
+          style={styles.imageStyle}
+        />
+        <Image
+          source={{uri: filePath.uri}}
+          style={styles.imageStyle}
+        />
+        <Text style={styles.textStyle}>
+          {filePath.uri}
+        </Text>
+        {/*
+          <Button
+            title="Choose File"
+            onPress={chooseFile} />
+        */}
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.buttonStyle}
+          onPress={chooseFile}>
+          <Text style={styles.textStyle}>
+            Choose Image
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+  titleText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingVertical: 20,
+  },
+  textStyle: {
+    padding: 10,
+    color: 'black',
+  },
+  buttonStyle: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#DDDDDD',
+    padding: 5,
+  },
+  imageStyle: {
+    width: 200,
+    height: 200,
+    margin: 5,
+  },
+});
+
+
+
+
+
+
+
+
+<View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:width*0.85,marginStart:25,marginEnd:25}}>
+<TextInput
+    placeholder='PLAYER1'
+    style={{ backgroundColor: '#E9DCC9', marginStart:20,width: width * 0.35, height: height * 0.045, borderRadius: 15, marginTop: 10, paddingStart: 10, fontStyle: 'italic', fontSize: 15 }}
+/>
+
+<TextInput
+    placeholder='PLAYER1'
+    style={{backgroundColor: '#E9DCC9', marginEnd:20,width: width * 0.35, height: height * 0.045, borderRadius: 15, marginTop: 10, paddingStart: 10, fontStyle: 'italic', fontSize: 15 }}
+/>
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, Dimensions, TextInput } from 'react-native';
+
+const Demo = () => {
+
+    const height = Dimensions.get('screen').height
+    const width = Dimensions.get('screen').width
+    const [modalVisible, setModalVisible] = useState(false);
+    return (
+        <View style={styles.centeredView}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setModalVisible(!modalVisible);
+                }}>
+                <View style={styles.centeredView}>
+                    <View style={{
+                        backgroundColor: 'white',
+                        borderRadius: 15,
+                        alignItems: 'center',
+                        shadowColor: '#000',
+                        shadowOffset: {
+                            width: 0,
+                            height: 2,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 4,
+                        elevation: 10,
+                        height: height * 0.45,
+                        width: width * 0.85, justifyContent: 'flex-start', padding:10
+
+                    }}>
+                        <Text style={{ fontWeight: 'bold', fontSize: 23 }}>Details.</Text>
+                        <Text style={{ paddingTop: 5, textDecorationLine: 'underline', color: 'blue' }}>Plzz Read the match rules & regulation</Text>
+                        <Text style={{ paddingTop: 0, textDecorationLine: 'underline', color: 'blue' }}>before joining the contest.</Text>
+
+                        <Text style={{ paddingTop: 10, fontSize: 18, fontWeight: 'bold', color: 'black' }}>Enter pubg username</Text>
+
+                        <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:width*0.85,marginStart:25,marginEnd:25}}>
+                            <TextInput
+                                placeholder='PLAYER1'
+                                style={{ backgroundColor: '#E9DCC9', marginStart:20,width: width * 0.35, height: height * 0.045, borderRadius: 15, marginTop: 10, paddingStart: 10, fontStyle: 'italic', fontSize: 15 }}
+                            />
+
+                            <TextInput
+                                placeholder='PLAYER1'
+                                style={{backgroundColor: '#E9DCC9', marginEnd:20,width: width * 0.35, height: height * 0.045, borderRadius: 15, marginTop: 10, paddingStart: 10, fontStyle: 'italic', fontSize: 15 }}
+                            />
+
+                        </View>
+
+                        
+                        <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:width*0.85,marginStart:25,marginEnd:25}}>
+                            <TextInput
+                                placeholder='PLAYER1'
+                                style={{ backgroundColor: '#E9DCC9', marginStart:20,width: width * 0.35, height: height * 0.045, borderRadius: 15, marginTop: 10, paddingStart: 10, fontStyle: 'italic', fontSize: 15 }}
+                            />
+
+                            <TextInput
+                                placeholder='PLAYER1'
+                                style={{backgroundColor: '#E9DCC9', marginEnd:20,width: width * 0.35, height: height * 0.045, borderRadius: 15, marginTop: 10, paddingStart: 10, fontStyle: 'italic', fontSize: 15 }}
+                            />
+
+                        </View>
+                        <Text style={{ fontWeight: 'bold', color: "red", paddingTop: 10 }}>Note: Make sure pubg username should be </Text>
+                        <Text style={{ fontWeight: 'bold', color: "red" }}>correct </Text>
+
+
+                        <View style={{ marginTop: height * 0.04, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Pressable
+                                style={{ backgroundColor: 'blue', width: width * 0.3, height: height * 0.0450, justifyContent: 'center', borderRadius: 15, elevation: 10, shadowColor: 'black', shadowOffset: 0.4 }}
+                                onPress={() => setModalVisible(!modalVisible)}>
+                                <Text style={styles.textStyle}>CANCEL</Text>
+                            </Pressable>
+
+                            <Pressable
+                                style={{ backgroundColor: 'blue', width: width * 0.3, height: height * 0.0450, justifyContent: 'center', borderRadius: 15, elevation: 10, marginStart: 15 }}
+                                onPress={() => setModalVisible(!modalVisible)}>
+                                <Text style={styles.textStyle}>J</Text>
+                            </Pressable>
+                        </View>
+                        <Text style={{ paddingTop:6, fontWeight: 'bold' }}>You will get room id & password 15 minuts</Text>
+                        <Text style={{ fontWeight: 'bold' }}>before the matching by notification.</Text>
+                    </View>
+                </View>
+            </Modal>
+            <Pressable
+                style={{
+                    borderRadius: 10,
+                    padding: 10,
+                    elevation: 2,
+                    backgroundColor: 'grey',
+                }}
+                onPress={() => setModalVisible(true)}>
+                <Text style={styles.textStyle}>Show Modal</Text>
+            </Pressable>
+        </View>
+    );
+};
+
+
+
+//fjfjjfjf
+
+
+
+
+const Demo = () => {
+
+
+    let interval = useRef();
+console.log(inputDate);
+
+    const olddate = new Date('2023-10-29T10:01:38.111Z');
+    const time = olddate.toLocaleTimeString();
+    const curentdate = olddate.toLocaleDateString();
+
+    let am_pm = time.slice(8, 12);
+    let ftime = time.slice(0, -6);
+
+      
+
+
+    const starttimer = () => {
+        const counter = new Date('2023-09-07T20:03:38.111Z').getTime();
+
+
+        interval = setInterval(() => {
+            const now = new Date().getTime();
+            const DIFFER = counter - now;
+           
+            const days = formatTime(Math.floor(DIFFER / 3600 / 24));
+            const hours = Math.floor(DIFFER / 3600) % 24;
+            const minutes = Math.floor(DIFFER / 60) % 60;
+            const seconds = Math.floor(DIFFER % 60);
+
+    
+            if (DIFFER < 0) {
+                clearInterval(interval.current);
+
+            } else {
+                settimerdays(days);
+                settimerHours(hours);
+                settimerMinuts(minutes);
+                settimersecond(seconds);
+
+            }
+        }, 1000)
+    };
+
+    function formatTime(time) {
+        return time < 10 ? `0${time}` : time;
+    }
+
+
+    useEffect(()=>{
+        starttimer();
+        return () => {
+            clearInterval(interval.current);
+        }
+    })
+
+    return (
+        <View>
+            <Text>days{timerdays}</Text>
+            <Text>hourse{timerHourse}</Text>
+            <Text>minut{timerMinuts}</Text>
+            <Text>dilda{timersecond}</Text>
+
+            <Text>day{curentdate}</Text>
+            <Text>dilda{ftime} {am_pm}</Text>
+
+            <Text>hussain</Text>
+        </View>
+    )
+}
+export default Demo;
+
+
+
+
+const Timeer = () => {
+        interval = setInterval(() => {
+            const changingDate = new Date(inputDate);
+            const currentDate = new Date();
+            const totalSeconds = (changingDate - currentDate) / 1000;
+
+            if (totalSeconds < 0) {
+                clearInterval(interval.current);
+            } else {
+                setDays(formatTime(Math.floor(totalSeconds / 3600 / 24)));
+                setHours(Math.floor(totalSeconds / 3600) % 24);
+                setMinutes(Math.floor(totalSeconds / 60) % 60);
+                setSeconds(Math.floor(totalSeconds % 60));
+            }
+        }, 1000)
+
+    }
+   /* useEffect(() => {
+        Timeer();
+        return () => {
+            clearInterval(interval.current);
+        };
+    });*/
+
+    function formatTime(time) {
+        return time < 10 ? `0${time}` : time;
+    }
+
+
+    return (
+
+    <View>
+        <Text>dffds</Text>
+        <Text>ddwd</Text>
+    </View>
+    )
+}
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect } from 'react'
+import {useState} from 'react'
+import { View, Text } from 'react-native'
+
+const Demo = () => {
+    const [days,setdays] = useState('00');
+    const [hours,sethours] = useState('00');
+    const [minut,setminut] = useState('00');
+    const [sec,setsec] = useState('00');
+
+    const dest = new Date("Wed Sep 08 2023 20:43:08 GMT+0530").getTime();
+
+    const x = setInterval(function() {
+    const now = new Date().getTime();
+    let diff = dest - now;
+    if (diff < 0) {
+        clearInterval(x);
+        //logic to hide contenst
+    }else{
+
+    setdays(Math.floor(diff / (1000 * 60 * 60 * 24)));
+    sethours(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+    setminut(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)));
+    setsec(Math.floor((diff % (1000 * 60)) / 1000));
+}
+
+},1000);
+
+
+    return (
+        <View>
+            <Text>days{days}</Text>
+            <Text>minu{hours}</Text>
+            <Text>hour{minut}</Text>
+            <Text>secon{sec}</Text>
+        </View>
+    )
+}
+export default Demo;
+
+
+
+
+
+

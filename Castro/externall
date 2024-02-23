@@ -1,0 +1,555 @@
+// Example of Bottom Sheet in React Native
+// https://aboutreact.com/react-native-bottom-sheet/
+
+// import React in our code
+import React, {useState} from 'react';
+
+// import all the components we are going to use
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  Button
+} from 'react-native';
+
+//import basic react native components
+import { BottomSheet } from 'react-native-btr';
+
+//import to show social icons
+
+
+const App = () => {
+  const [visible, setVisible] = useState(false);
+
+  const toggleBottomNavigationView = () => {
+    //Toggling the visibility state of the bottom sheet
+    setVisible(!visible);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Text
+          style={{
+            fontSize: 20,
+            marginBottom: 20,
+            textAlign: 'center'
+          }}>
+          Example of Bottom Sheet in React Native
+        </Text>
+        <Button
+          onPress={toggleBottomNavigationView}
+          //on Press of the button bottom sheet will be visible
+          title="Show Bottom Sheet"
+        />
+        <BottomSheet
+          visible={visible}
+          //setting the visibility state of the bottom shee
+          onBackButtonPress={toggleBottomNavigationView}
+          //Toggling the visibility state
+          onBackdropPress={toggleBottomNavigationView}
+          //Toggling the visibility state
+        >
+          {/*Bottom Sheet inner View*/}
+          <View style={styles.bottomNavigationView}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  padding: 20,
+                  fontSize: 20
+                }}>
+                Share Using
+              </Text>
+             
+              <View style={{flex: 1, flexDirection: 'row'}}>
+               
+                <Text>hello</Text>
+               
+              </View>
+            </View>
+          </View>
+        </BottomSheet>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E0F7FA',
+  },
+  bottomNavigationView: {
+    backgroundColor: '#fff',
+    width: '100%',
+    height: 250,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+
+
+
+
+//////////////////////
+
+import {useRef} from 'react'
+import Modal from 'react-native-modalbox';
+import { View, Text,StyleSheet,  Dimensions } from 'react-native'
+import React from 'react'
+const width = Dimensions.get('screen').width;
+
+
+const  BottomSheet =(props)=> {
+  const refdata = useRef(null);
+
+  const focusInput = () => {
+      refdata.current.open();
+  }
+  props.childRef.current = {
+      focusInput: focusInput,
+  };
+
+  
+
+    return (
+      <View style={{ paddingTop: 50,
+        flex: 1}}>
+        
+        <Modal  style={[styles.modal, styles.modal4]} position={"bottom"} ref={refdata} swipeArea={20}>
+          
+            <View style={{width:width, paddingLeft: 10}}>
+             <Text>hello</Text>
+            </View>
+        
+        </Modal>
+      </View>
+    );
+  }
+
+
+
+const styles = StyleSheet.create({
+
+  
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+
+  modal4: {
+    height: 300
+  },
+
+
+});
+export default BottomSheet;
+
+
+
+
+
+
+//// videos
+
+
+
+
+
+// React Native Video Library to Play Video in Android and IOS
+// https://aboutreact.com/react-native-video/
+
+// import React in our code
+import React, { useState, useRef } from 'react';
+
+// import all the components we are going to use
+import {Text,View, Dimensions,TouchableOpacity, Pressable } from 'react-native';
+
+//Import React Native Video to play video
+import Video from 'react-native-video';
+import  Slider  from 'react-native-slider';
+import Icon from 'react-native-vector-icons/FontAwesome5'
+//Media Controls to control Play/Pause/Seek and full screen
+import
+MediaControls, { PLAYER_STATES }
+  from 'react-native-media-controls';
+
+
+const height = Dimensions.get('screen').height
+const width = Dimensions.get('screen').width;
+const Bottomsheet = () => {
+  const videoPlayer = useRef(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [paused, setPaused] = useState(false);
+  const [playerState, setPlayerState] = useState(PLAYER_STATES.PLAYING);
+  const [screenType, setScreenType] = useState('cover');
+  const [vflg,setvflg] = useState(false);
+  const [boxflg,setboxflg] = useState(false);
+
+console.log(boxflg);
+  const onSeek = (seek) => {
+    //Handler for change in seekbar
+    videoPlayer.current.seek(seek);
+  };
+
+  const onPaused = (playerState) => {
+    //Handler for Video Pause
+    setPaused(!paused);
+    setPlayerState(playerState);
+  };
+
+  const onReplay = () => {
+    //Handler for Replay
+    setPlayerState(PLAYER_STATES.PLAYING);
+    videoPlayer.current.seek(0);
+  };
+
+  const onProgress = (data) => {
+    // Video Player will progress continue even if it ends
+    if (!isLoading && playerState!== duration) {
+      setCurrentTime(data.currentTime);
+      
+    }
+  };
+
+  const onLoad = (data) => {
+    setDuration(data.duration);
+    
+    setIsLoading(false);
+  };
+
+  const onLoadStart = (data) => {2
+    setIsLoading(true);
+    
+  }
+
+  const onEnd = () => setPlayerState(PLAYER_STATES.ENDED);
+
+  const onError = () => alert('Oh! ');
+
+
+  const onSeeking = (currentTime) => setCurrentTime(currentTime);
+
+  return (
+    <View style={{ flex: 1 }}>
+<Pressable onPress={()=>setboxflg(!boxflg)}>
+      <View style={{ height: height * 0.3, width: width }}>
+        <Video
+          onLoad={onLoad}
+          onError={onError}
+          onLoadStart={onLoadStart}
+          onProgress={onProgress}
+          paused={paused}
+          ref={videoPlayer}
+          resizeMode={screenType}
+          onReplay ={true}
+          control={false}
+          repeat={true}
+          ignoreSilentSwitch={'ignore'}
+          source={{
+            uri:
+              'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          }}
+          style={{ height: height * 0.3, width: width }}
+          volume ={vflg?1:0.0}
+          muted ={false}
+        />
+      </View>
+      </Pressable>
+        {boxflg?
+      <View style={{position:'absolute',justifyContent:'center',alignItems:'center'}}>
+        <Text>hello</Text>
+      </View>:null}
+      
+
+      <View style={{marginTop:height*0.2470,marginHorizontal:8,position:'absolute',justifyContent:'flex-start',flexDirection:'row'}}>
+      <View style={{backgroundColor:'grey',borderRadius:8,opacity:0.5,elevation:10,alignItems:'center',justifyContent:'center'}}>
+      <Text style={{color:'black',fontWeight:'bold',marginHorizontal:8,marginVertical:0}}>Preview</Text>
+      </View>
+       
+        <TouchableOpacity style={{justifyContent:'center',alignItems:'center',marginStart:width*0.75}} onPress={()=>setvflg(!vflg)}>
+        <Icon name ={vflg?'volume-up':'volume-mute'} size ={20}style={{marginBottom:4,marginTop:10}}/>
+        </TouchableOpacity>
+      </View>
+
+      <Slider
+      style={{width:width*0.90,marginHorizontal:20,position:'absolute',marginTop:height*0.27}}
+          minimumValue={0}
+          maximminimumValue={duration/1000}
+          value={currentTime/1000}
+          minimumTrackTintColor='red'
+          maximumTrackTintColor ='grey'
+          thumbTintColor='green'
+          onValueChange={(x) =>console.log(x)} />
+      
+    </View>
+  );
+};
+
+export default Bottomsheet;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+import {
+    View,
+    Text,
+    StyleSheet,
+    Dimensions,
+    TouchableNativeFeedback,
+    ActivityIndicator,
+    Pressable,
+    Alert
+
+} from 'react-native';
+import Video from 'react-native-video'; /// alreadyimported this
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // and this
+import Aicon from 'react-native-vector-icons/AntDesign'
+import A5icon from 'react-native-vector-icons/FontAwesome5'
+import Orientation from 'react-native-orientation-locker';
+import Slider from '@react-native-community/slider';
+import { useState, useEffect } from 'react';
+
+
+const { width, height } = Dimensions.get('window');
+
+export default App = () => {
+
+    const [showPopover, setShowPopover] = useState(false);
+
+    const [prate,setprate] =useState(1);
+    const [loading,setloading] =useState(false);
+    const [duration,setduration] =useState(0.1);
+    const [ currentTime,setcurrentTime] = useState(0);
+
+  const playingrate=(item)=>{
+    setprate(item);
+    setShowPopover(false);
+  }
+
+  const videoError =()=>{
+    //loading true
+    Alert.alert('Oho Something went wrong. try again.')
+  }
+
+  load = ({ duration }) =>{
+    setloading(true)
+    setduration(duration)}// now here the duration is update on load video
+
+ 
+progress = ({ currentTime }) => {
+    setloading(false)
+    console.log(currentTime)
+    setcurrentTime(currentTime)} // here the current time is upated
+ 
+
+    backward = () => {
+        this.video.seek(this.state.currentTime - 10);
+        clearTimeout(this.overlayTimer);
+        this.overlayTimer = setTimeout(() => this.setState({ overlay: false }), 30000);
+      }
+      forward = () => {
+        this.video.seek(this.state.currentTime + 10); // here the video is seek to 5 sec forward
+        clearTimeout(this.overlayTimer);
+        this.overlayTimer = setTimeout(() => this.setState({ overlay: false }), 30000);
+      }
+   
+
+    useEffect(() => {
+        setTimeout(() => setShowPopover(false), 2000);
+    }, []);
+
+
+    return (
+        <View style={style.container}>
+         
+            <View style={false ? style.fullscreenVideo : style.video}>
+
+
+                <Video
+                    // fullscreen={fullscreen}
+                    // paused={paused} // this will manage the pause and play
+                    // ref={ref => this.video = ref}
+                    source={{
+                        uri:
+                            'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                    }}
+                    style={{ ...StyleSheet.absoluteFill }}
+                    resizeMode='cover'
+                     onLoad={load}
+                   // onBuffer={this.onBuffer}                // Callback when remote video is buffering
+                    onError={videoError} 
+                    rate={prate}
+                //onError={this.videoError}  
+                // hideShutterView={true}
+                 onProgress={progress}
+                // onVideoEnd={this.onEndVideo}
+                />
+
+
+
+
+
+                {false ?
+                    <View style={{ marginTop: height * 0.1 }}>
+                        <ActivityIndicator size={60} color={'red'} />
+                    </View> : null}
+
+
+                <View style={style.overlay}>
+                    {/* now we can remove this not */}
+
+                    {true ? <View style={{ ...style.overlaySet, backgroundColor: '#0006' }}>
+                        <Icon name='rewind-10' style={style.icon} onPress={() => console.log('backward')} />
+                        <Aicon name={true ? 'playcircleo' : 'pausecircleo'} style={style.icon} onPress={() => console.log('paused')} />
+                        <Icon name='fast-forward-10' style={style.icon} onPress={() => console.log('forwar')} />
+                        <View style={style.sliderCont}>
+                            <View style={style.timer}>
+
+                                <Text style={{ color: 'white' }}>00</Text>
+
+                                <View style={{ flexDirection: 'row', alignItems: "center" }}>
+                                    <Text style={{ color: 'white', paddingEnd: 5, color: 'grey' }}>Speed</Text>
+
+
+                                    <Pressable onPress={() => setShowPopover(!showPopover)}>
+                                        <Icon name='play-speed' size={20} color='white' />
+                                    </Pressable>
+                                </View>
+
+
+                                <Text style={{ color: 'white' }}>33:3   <A5icon onPress={() => console.log('full screen')} name={true ? 'compress' : 'expand'} style={{ fontSize: 15 }} /></Text>
+                            </View>
+
+                            <Slider
+                                // we want to add some param here
+                                maximumTrackTintColor='white'
+                                minimumTrackTintColor='white'
+                                thumbTintColor='white' // now the slider and the time will work
+                                value={1} // slier input is 0 - 1 only so we want to convert sec to 0 - 1
+                                onValueChange={(x) => console.log(x)}
+                            />
+                        </View>
+
+
+                        {showPopover?
+                        <View style={{ backgroundColor: 'green', width: width * 0.15,elevation:10,height: height * 0.2, position: 'absolute', marginTop: height * 0.0820, marginStart: width * 0.60, borderRadius: 10, backgroundColor: '#c4aead', justifyContent: 'center', alignItems: 'center' }}>
+                           <Pressable onPress={()=>playingrate(0.2)}>
+                             <Text style={{ color: 'black',paddingBottom:5,fontSize:17,fontWeight:'bold'}}>0.2</Text>
+                           </Pressable>
+
+                           <Pressable onPress={()=>playingrate(0.5)}>
+                            <Text style={{ color: 'black' ,paddingBottom:5,fontSize:17,fontWeight:'bold'}}>0.5</Text>
+                            </Pressable>
+
+                            <Pressable onPress={()=>playingrate(1)}>
+                            <Text style={{ color: 'black',paddingBottom:0,fontSize:17,fontWeight:'bold'}}>1</Text>
+                            </Pressable>
+
+                            <Pressable onPress={()=>playingrate(1.2)}>
+                            <Text style={{ color: 'black' ,paddingBottom:5,fontSize:17,fontWeight:'bold'}}>1.2</Text>
+                            </Pressable>
+
+                            <Pressable onPress={()=>playingrate(1.5)}>
+                            <Text style={{ color: 'black' ,paddingBottom:5,fontSize:17,fontWeight:'bold'}}>1.5</Text>
+                            </Pressable>
+
+                            <Pressable onPress={()=>playingrate(2.0)}>
+                            <Text style={{ color: 'black' ,paddingTop:0,fontSize:17,fontWeight:'bold'}}>2.0</Text>
+                            </Pressable>
+                        </View>:null}
+
+
+
+                    </View> : <View style={style.overlaySet}>
+                        <TouchableNativeFeedback onPress={() => console.log('double tab backward')}><View style={{ flex: 1, opacity: 0.1 }} /></TouchableNativeFeedback>
+                        <TouchableNativeFeedback onPress={() => console.log('forward double tab')}><View style={{ flex: 1, opacity: 0.1 }} /></TouchableNativeFeedback>
+                    </View>}
+
+                </View>
+            </View>
+           
+        </View>
+    );
+}
+
+
+const style = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject
+    },
+    overlaySet: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    icon: {
+        color: 'white',
+        flex: 1,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        fontSize: 45
+    },
+    sliderCont: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0
+    },
+    timer: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10
+    },
+    video: { width, height: width * .6, backgroundColor: 'black' },
+    fullscreenVideo: {
+        backgroundColor: 'black',
+        ...StyleSheet.absoluteFill,
+        elevation: 1
+    },
+
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+    },
+});
